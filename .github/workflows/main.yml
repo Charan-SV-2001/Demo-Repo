@@ -1,0 +1,91 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main 
+  workflow_dispatch:  
+
+jobs:
+  build-dev:
+    name: Build in Development
+    runs-on: ubuntu-latest
+    environment: Development
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        echo "Building the project in Development environment..."
+
+  test-dev:
+    name: Test in Development
+    runs-on: ubuntu-latest
+    needs: build-dev
+    environment: Development
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Test
+      run: |
+        echo "Running tests in Development environment..."
+        
+  deploy-dev:
+    name: Deploy in Development
+    runs-on: ubuntu-latest
+    needs: test-dev
+    environment: Development
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy
+      run: |
+        echo "Deploying to Development environment..."
+        
+
+  build-prod:
+    name: Build in Production
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        echo "Building the project in Production environment..."
+        
+
+  test-prod:
+    name: Test in Production
+    runs-on: ubuntu-latest
+    needs: build-prod
+    environment: Production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Test
+      run: |
+        echo "Running tests in Production environment..."
+       
+
+  deploy-prod:
+    name: Deploy in Production
+    runs-on: ubuntu-latest
+    needs: test-prod
+    environment: Production
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy
+      run: |
+        echo "Deploying to Production environment..."
